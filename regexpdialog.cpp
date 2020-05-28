@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
+** Contact: https:
 **
 ** This file is part of the examples of the Qt Toolkit.
 **
@@ -11,8 +11,8 @@
 ** accordance with the commercial license agreement provided with the
 ** Software or, alternatively, in accordance with the terms contained in
 ** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
+** and conditions see https:
+** information use the contact form at https:
 **
 ** BSD License Usage
 ** Alternatively, you may use this file under the terms of the BSD license
@@ -47,151 +47,76 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
 #include <QtWidgets>
-
+#include <QPushButton>
 #include "regexpdialog.h"
-
 RegExpDialog::RegExpDialog(QWidget *parent)
     : QDialog(parent)
 {
-    patternComboBox = new QComboBox;
-    patternComboBox->setEditable(true);
-    patternComboBox->setSizePolicy(QSizePolicy::Expanding,
+    patternEdit = new QLineEdit;
+    patternEdit->setSizePolicy(QSizePolicy::Expanding,
                                    QSizePolicy::Preferred);
+    patternLabel = new QLabel(tr("&QRegExp à tester"));
+    patternLabel->setBuddy(patternEdit);
 
-    patternLabel = new QLabel(tr("&Pattern:"));
-    patternLabel->setBuddy(patternComboBox);
-
-//    escapedPatternLineEdit = new QLineEdit;
-//    escapedPatternLineEdit->setReadOnly(true);
-//    QPalette palette = escapedPatternLineEdit->palette();
-//    palette.setBrush(QPalette::Base,
-//                     palette.brush(QPalette::Disabled, QPalette::Base));
-//    escapedPatternLineEdit->setPalette(palette);
-
-//    escapedPatternLabel = new QLabel(tr("&Escaped Pattern:"));
-//    escapedPatternLabel->setBuddy(escapedPatternLineEdit);
-
-//    syntaxComboBox = new QComboBox;
-//    syntaxComboBox->addItem(tr("Regular expression v1"), QRegExp::RegExp);
-//    syntaxComboBox->addItem(tr("Regular expression v2"), QRegExp::RegExp2);
-//    syntaxComboBox->addItem(tr("Wildcard"), QRegExp::Wildcard);
-//    syntaxComboBox->addItem(tr("Fixed string"), QRegExp::FixedString);
-//    syntaxComboBox->addItem(tr("W3C Xml Schema 1.1"), QRegExp::W3CXmlSchema11);
-
-    syntaxLabel = new QLabel(tr("&Pattern Syntax:"));
-//    syntaxLabel->setBuddy(syntaxComboBox);
-
-    textComboBox = new QComboBox;
-    textComboBox->setEditable(true);
-    textComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-
-    textLabel = new QLabel(tr("&Text:"));
-    textLabel->setBuddy(textComboBox);
-
-//    caseSensitiveCheckBox = new QCheckBox(tr("Case &Sensitive"));
-//    caseSensitiveCheckBox->setChecked(true);
-//    minimalCheckBox = new QCheckBox(tr("&Minimal"));
-
-//    indexLabel = new QLabel(tr("Index of Match:"));
-    verifyEdit = new QLineEdit;
-    verifyEdit->setReadOnly(true);/*
-
-    matchedLengthLabel = new QLabel(tr("Matched Length:"));*/
-//    matchedLengthEdit = new QLineEdit;
-//    matchedLengthEdit->setReadOnly(true);
-
-//    for (int i = 0; i < MaxCaptures; ++i) {
-//        captureLabels[i] = new QLabel(tr("Capture %1:").arg(i));
-//        captureEdits[i] = new QLineEdit;
-//        captureEdits[i]->setReadOnly(true);
-//    }
-//    captureLabels[0]->setText(tr("Match:"));
-
-    QHBoxLayout *checkBoxLayout = new QHBoxLayout;
-//    checkBoxLayout->addWidget(caseSensitiveCheckBox);
-//    checkBoxLayout->addWidget(minimalCheckBox);
-    checkBoxLayout->addStretch(1);
-
+    textEdit = new QLineEdit;
+    textEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    textLabel = new QLabel(tr("&Texte à tester:"));
+    textLabel->setBuddy(textEdit);
+    caputredEdit = new QLineEdit;
+    caputredEdit->setReadOnly(true);
+    capturedLabel = new QLabel(tr("Texte capturée"));
+    pitureLabel=new QLabel();
+    yesImage = new QImage();
+    noImage = new QImage();
+    maybeImage = new QImage();
+    yesImage->load(":/ressource/yes.png");
+    noImage->load(":/ressource/no.png");
+    maybeImage->load(":/ressource/maybe.png");
+    capturedLabel->setBuddy(caputredEdit);
+    QPushButton *tester = new QPushButton();
+    tester->setText("tester");
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(patternLabel, 0, 0);
-    mainLayout->addWidget(patternComboBox, 0, 1);
-//    mainLayout->addWidget(escapedPatternLabel, 1, 0);
-//    mainLayout->addWidget(escapedPatternLineEdit, 1, 1);
-    mainLayout->addWidget(syntaxLabel, 2, 0);
-//    mainLayout->addWidget(syntaxComboBox, 2, 1);
-    mainLayout->addLayout(checkBoxLayout, 3, 0, 1, 2);
+    mainLayout->addWidget(patternEdit, 0, 1);
     mainLayout->addWidget(textLabel, 4, 0);
-    mainLayout->addWidget(textComboBox, 4, 1);
-//    mainLayout->addWidget(indexLabel, 5, 0);
-    mainLayout->addWidget(verifyEdit, 5, 1);
-//    mainLayout->addWidget(matchedLengthLabel, 6, 0);
-//    mainLayout->addWidget(matchedLengthEdit, 6, 1);
-
-//    for (int j = 0; j < MaxCaptures; ++j) {
-//        mainLayout->addWidget(captureLabels[j], 7 + j, 0);
-//        mainLayout->addWidget(captureEdits[j], 7 + j, 1);S
-//    }
+    mainLayout->addWidget(textEdit, 4, 1);
+    mainLayout->addWidget(pitureLabel, 4, 2);
+    mainLayout->addWidget(capturedLabel, 5, 0);
+    mainLayout->addWidget(caputredEdit, 5, 1);
+    mainLayout->addWidget(tester, 5, 2);
     setLayout(mainLayout);
-
-    connect(patternComboBox, SIGNAL(editTextChanged(QString)),
-            this, SLOT(refresh()));
-    connect(textComboBox, SIGNAL(editTextChanged(QString)),
-            this, SLOT(refresh()));
-//    connect(caseSensitiveCheckBox, SIGNAL(toggled(bool)),
-//            this, SLOT(refresh()));
-//    connect(minimalCheckBox, SIGNAL(toggled(bool)), this, SLOT(refresh()));
-//    connect(syntaxComboBox, SIGNAL(currentIndexChanged(int)),
-//            this, SLOT(refresh()));
-
-    patternComboBox->addItem(tr("[A-Za-z_]+([A-Za-z_0-9]*)"));
-    textComboBox->addItem(tr("(10 + delta4) * 32"));
-
+    sound = new QSoundEffect();
+    sound->setSource(QUrl::fromLocalFile(":/ressource/pop.wav"));
+    patternEdit->setText(tr("a+"));
+    textEdit->setText(tr("aab"));
     setWindowTitle(tr("RegExp"));
     setFixedHeight(sizeHint().height());
     refresh();
+    connect(tester, SIGNAL(released()),
+            this, SLOT(refresh()));
 }
-
 void RegExpDialog::refresh()
 {
     setUpdatesEnabled(false);
-
-    QString pattern = patternComboBox->currentText();
-    QString text = textComboBox->currentText();
-
-    QString escaped = pattern;
-//    escaped.replace("\\", "\\\\");
-//    escaped.replace("\"", "\\\"");
-//    escaped.prepend('"');
-//    escaped.append('"');
-//    escapedPatternLineEdit->setText(escaped);
-
-    QRegExp rx(pattern);
-    Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-//    if (caseSensitiveCheckBox->isChecked())
-//        cs = Qt::CaseSensitive;
-    rx.setCaseSensitivity(cs);
-//    rx.setMinimal(minimalCheckBox->isChecked());
-//    QRegExp::PatternSyntax syntax = QRegExp::PatternSyntax(
-//            syntaxComboBox->itemData(syntaxComboBox->currentIndex()).toInt());
-//    rx.setPatternSyntax(syntax);
-
-    QPalette palette = patternComboBox->palette();
+    qInfo() << "onClick()";
+    sound->play();
+    QString pattern = patternEdit->text();
+    QString text = textEdit->text();
+    QRegularExpression rx(pattern);
+    QRegularExpressionMatch match = rx.match(text);
+    QPalette palette = patternEdit->palette();
     if (rx.isValid()) {
         palette.setColor(QPalette::Text,
-                         textComboBox->palette().color(QPalette::Text));
+                         textEdit->palette().color(QPalette::Text));
     } else {
         palette.setColor(QPalette::Text, Qt::red);
     }
-    patternComboBox->setPalette(palette);
-    verifyEdit->setText(QString::number(rx.exactMatch(text)));
-//    matchedLengthEdit->setText(QString::number(rx.matchedLength()));
-//    for (int i = 0; i < MaxCaptures; ++i) {
-//        captureLabels[i]->setEnabled(i <= rx.captureCount());
-//        captureEdits[i]->setEnabled(i <= rx.captureCount());
-//        captureEdits[i]->setText(rx.cap(i));
-//    }
-
+    patternEdit->setPalette(palette);
+    QString captured =match.captured();
+    caputredEdit->setText(captured); //QString::number(rx.exactMatch(text))
+    showImage = captured.size()==text.size()?yesImage:maybeImage;
+    showImage = captured.size()==0?noImage:showImage;
+    pitureLabel->setPixmap(QPixmap::fromImage(*showImage));
     setUpdatesEnabled(true);
 }

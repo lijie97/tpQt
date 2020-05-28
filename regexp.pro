@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets multimedia
 requires(qtConfig(combobox))
 
 HEADERS       = regexpdialog.h
