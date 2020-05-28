@@ -8,3 +8,6 @@ SOURCES       = regexpdialog.cpp \
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/tools/regexp
 INSTALLS += target
+
+RESOURCES += \
+    regexp.qrc

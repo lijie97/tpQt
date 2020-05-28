@@ -1,0 +1,12 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>ressource/badluck.wav</file>
+    <file>ressource/maybe.png</file>
+    <file>ressource/no.png</file>
+    <file>ressource/pop.wav</file>
+    <file>ressource/rouge40.png</file>
+    <file>ressource/vert-rouge40.png</file>
+    <file>ressource/vert40.png</file>
+    <file>ressource/yes.png</file>
+</qresource>
+</RCC>
